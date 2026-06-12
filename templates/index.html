@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Loan Approval Predictor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(-45deg,#0f172a,#1e293b,#2563eb,#7c3aed);
+background-size:400% 400%;
+animation:gradient 12s ease infinite;
+overflow-x:hidden;
+}
+
+@keyframes gradient{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.orb{
+position:fixed;
+border-radius:50%;
+filter:blur(70px);
+opacity:.5;
+z-index:-1;
+animation:float 10s ease-in-out infinite;
+}
+
+.orb1{
+width:300px;
+height:300px;
+background:#00e5ff;
+top:10%;
+left:5%;
+}
+
+.orb2{
+width:250px;
+height:250px;
+background:#7c4dff;
+right:10%;
+top:40%;
+}
+
+.orb3{
+width:200px;
+height:200px;
+background:#00c853;
+bottom:10%;
+left:50%;
+}
+
+@keyframes float{
+50%{
+transform:translateY(-40px);
+}
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px;
+}
+
+.hero{
+text-align:center;
+color:white;
+margin-bottom:30px;
+}
+
+.hero h1{
+font-size:3rem;
+}
+
+.hero p{
+margin-top:10px;
+opacity:.9;
+}
+
+.bank-icon{
+font-size:90px;
+animation:bounce 3s infinite;
+}
+
+@keyframes bounce{
+50%{
+transform:translateY(-15px);
+}
+}
+
+.card{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+border-radius:25px;
+padding:30px;
+box-shadow:0 25px 45px rgba(0,0,0,.25);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+label{
+display:block;
+margin-bottom:6px;
+color:white;
+font-weight:500;
+}
+
+select,input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+font-size:15px;
+outline:none;
+}
+
+button{
+width:100%;
+margin-top:20px;
+padding:15px;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(90deg,#00e5ff,#2979ff);
+color:white;
+box-shadow:0 0 20px #00e5ff;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.03);
+box-shadow:0 0 40px #00e5ff;
+}
+
+.result{
+margin-top:25px;
+text-align:center;
+color:white;
+animation:pop .7s ease;
+}
+
+@keyframes pop{
+from{
+opacity:0;
+transform:scale(.7);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+.approved{
+background:#16a34a;
+padding:20px;
+border-radius:15px;
+}
+
+.rejected{
+background:#dc2626;
+padding:20px;
+border-radius:15px;
+}
+
+footer{
+margin-top:40px;
+padding:25px;
+text-align:center;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(15px);
+border-radius:20px;
+color:white;
+}
+
+footer h3{
+margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+
+<div class="hero">
+<div class="bank-icon">🏦</div>
+<h1>Smart Loan Approval Predictor</h1>
+<p>🤖 AI Powered Loan Eligibility Prediction System</p>
+</div>
+
+<div class="card">
+
+<form action="/predict" method="POST">
+
+<div class="form-grid">
+
+<div>
+<label>👨 Gender</label>
+<select name="Gender">
+<option value="1">Male</option>
+<option value="0">Female</option>
+</select>
+</div>
+
+<div>
+<label>💍 Marital Status</label>
+<select name="Married">
+<option value="1">Married</option>
+<option value="0">Single</option>
+</select>
+</div>
+
+<div>
+<label>👨‍👩‍👧 Dependents</label>
+<select name="Dependents">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="4">3+</option>
+</select>
+</div>
+
+<div>
+<label>🎓 Education</label>
+<select name="Education">
+<option value="1">Graduate</option>
+<option value="0">Not Graduate</option>
+</select>
+</div>
+
+<div>
+<label>💼 Employment</label>
+<select name="Self_Employed">
+<option value="0">Salaried</option>
+<option value="1">Self Employed</option>
+</select>
+</div>
+
+<div>
+<label>💰 Applicant Income</label>
+<input type="number" name="ApplicantIncome" required>
+</div>
+
+<div>
+<label>💵 Coapplicant Income</label>
+<input type="number" name="CoapplicantIncome" required>
+</div>
+
+<div>
+<label>🏦 Loan Amount</label>
+<input type="number" name="LoanAmount" required>
+</div>
+
+<div>
+<label>📅 Loan Term</label>
+<input type="number" name="Loan_Amount_Term" value="360" required>
+</div>
+
+<div>
+<label>✅ Credit History</label>
+<select name="Credit_History">
+<option value="1">Good</option>
+<option value="0">Bad</option>
+</select>
+</div>
+
+<div>
+<label>🏙 Property Area</label>
+<select name="Property_Area">
+<option value="0">Rural</option>
+<option value="1">Semi Urban</option>
+<option value="2">Urban</option>
+</select>
+</div>
+
+</div>
+
+<button type="submit">🚀 Predict Loan Status</button>
+
+</form>
+
+{% if prediction_text %}
+
+<div class="result">
+
+<div class="{{ color }}">
+
+<h2>{{ prediction_text }}</h2>
+
+<br>
+
+<p>{{ prediction_message }}</p>
+
+{% if probability %}
+<br>
+<h3>🎯 Confidence Score: {{ probability }}%</h3>
+{% endif %}
+
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<footer>
+
+<h3>👨‍💻 Developed By Akshat Goyal</h3>
+
+<p>🤖 Machine Learning Project</p>
+
+<p>⚡ Support Vector Machine (SVM)</p>
+
+<p>☁️ Deployed on Render</p>
+
+</footer>
+
+</div>
+
+</body>
+</html>
